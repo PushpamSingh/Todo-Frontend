@@ -10,5 +10,8 @@ export default defineConfig({
       '/api':'https://todo-backend-3t7g.onrender.com'
     }
   },
+  build: {
+    outDir: 'dist', // Vercel expects this
+  },
   plugins: [react(),tailwindcss()],
 })
