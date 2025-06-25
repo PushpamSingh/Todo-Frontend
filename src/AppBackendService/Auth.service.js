@@ -1,0 +1,103 @@
+import axios from "axios";
+
+const baseUrl='/api/v1/user'
+
+class Authservice{
+    //! User Register
+    async createUser({username,email,password,phone,avatar}){
+        // console.log("data from create user: ",username,email,password,phone,avatar);
+        const formData = new FormData();
+        formData.append("username", username);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        formData.append("password", password);
+        formData.append("avatar", avatar);
+        try {
+            const userRegister=await axios.post(`${baseUrl}/register`,formData)
+
+            if(userRegister){
+                return this.userLogin({email,password});
+            }else{
+                return userRegister.data;
+            }
+        } catch (error) {
+            // console.log("Authservice :: createUser :: Error :",error);
+            throw error;
+        }
+    }
+
+    //! User LogIn
+    async userLogin({email,password}){
+        try {
+            const loggedinUser=await axios.post(`${baseUrl}/login`,{
+                email,
+                password
+            })
+            return loggedinUser.data;
+        } catch (error) {
+            // console.log("Authservice :: userLogin :: Error :",error);
+            throw error;
+        }
+    }
+
+    //! User LogOut
+    async userLogOut(){
+        try {
+            const logoutuser=await axios.delete(`${baseUrl}/logout`);
+            return logoutuser.data;
+        } catch (error) {
+            //  console.log("Authservice :: userLogOut :: Error :",error);
+            throw error;
+        }
+    }
+
+    //! get current user
+    async getcurrentUser(){
+        try {
+            const getUser=await axios.get(`${baseUrl}/getcurrentuser`);
+            if(getUser){
+                return getUser.data;
+            }else{
+                return null;
+            }
+        } catch (error) {
+            // console.log("Authservice :: getCurrentUser :: Error :",error);
+            throw error;
+        }
+    }
+
+    //! change Password
+    async changePassword(data){
+        try {
+            const response=await axios.put(`${baseUrl}/changepassword`,{
+               oldPassword:data?.oldPassword,
+               newPassword:data?.newPassword
+            }
+            )
+            return response.data;
+        } catch (error) {
+            // console.log("Authservice :: changePassword :: Error :",error);
+            throw error;
+        }
+    }
+
+    //! updateUserDetails
+    async updateUserDetails({username,email,avatar}){
+        try {
+            const formData=new FormData();
+            formData.append('username',username);
+            formData.append('email',email);
+            if(avatar){
+                formData.append('avatar',avatar);
+            }
+            const updatedUser=await axios.put(`${baseUrl}/updateuserdetailes`,formData)
+            return updatedUser.data;
+        } catch (error) {
+            // console.log("Authservice :: updateUserDetails :: Error :",error);
+            throw error;
+        }
+    }
+}
+
+const authService=new Authservice();
+export default authService;
