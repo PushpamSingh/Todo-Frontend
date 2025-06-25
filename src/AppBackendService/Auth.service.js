@@ -1,6 +1,7 @@
 import axios from "axios";
 // const baseUrl='https://todo-backend-3t7g.onrender.com/api/v1/user'
 const baseUrl=`${import.meta.env.VITE_BACKEND_URL}/api/v1/user`;
+// const baseUrl=`/api/v1/user`;
 
 class Authservice{
     //! User Register
