@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const baseUrl='https://todo-backend-3t7g.onrender.com/api/v1/todo';
+// const baseUrl='https://todo-backend-3t7g.onrender.com/api/v1/todo'
+
+const baseUrl=`${import.meta.env.VITE_BACKEND_URL}/api/v1/todo`;
 
 class PostService{
     async createTodo({title,description}){
