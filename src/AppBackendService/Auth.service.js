@@ -18,7 +18,7 @@ class Authservice{
         formData.append("password", password);
         formData.append("avatar", avatar);
         try {
-            const userRegister=await API.post(`${baseUrl}/register`,formData)
+            const userRegister=await API.post(`/register`,formData)
 
             if(userRegister){
                 return this.userLogin({email,password});
@@ -34,7 +34,7 @@ class Authservice{
     //! User LogIn
     async userLogin({email,password}){
         try {
-            const loggedinUser=await API.post(`${baseUrl}/login`,{
+            const loggedinUser=await API.post(`/login`,{
                 email,
                 password
             })
@@ -48,7 +48,7 @@ class Authservice{
     //! User LogOut
     async userLogOut(){
         try {
-            const logoutuser=await API.delete(`${baseUrl}/logout`);
+            const logoutuser=await API.delete(`/logout`);
             return logoutuser.data;
         } catch (error) {
             //  console.log("Authservice :: userLogOut :: Error :",error);
@@ -59,7 +59,7 @@ class Authservice{
     //! get current user
     async getcurrentUser(){
         try {
-            const getUser=await API.get(`${baseUrl}/getcurrentuser`);
+            const getUser=await API.get(`/getcurrentuser`);
             if(getUser){
                 return getUser.data;
             }else{
@@ -74,7 +74,7 @@ class Authservice{
     //! change Password
     async changePassword(data){
         try {
-            const response=await API.put(`${baseUrl}/changepassword`,{
+            const response=await API.put(`/changepassword`,{
                oldPassword:data?.oldPassword,
                newPassword:data?.newPassword
             }
@@ -95,7 +95,7 @@ class Authservice{
             if(avatar){
                 formData.append('avatar',avatar);
             }
-            const updatedUser=await API.put(`${baseUrl}/updateuserdetailes`,formData)
+            const updatedUser=await API.put(`/updateuserdetailes`,formData)
             return updatedUser.data;
         } catch (error) {
             // console.log("Authservice :: updateUserDetails :: Error :",error);

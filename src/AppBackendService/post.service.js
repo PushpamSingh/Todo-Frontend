@@ -12,7 +12,7 @@ const API=axios.create({
 class PostService{
     async createTodo({title,description}){
         try {
-            const createdTodo=await API.post(`${baseUrl}/createtodo`,{title,description});
+            const createdTodo=await API.post(`/createtodo`,{title,description});
             return createdTodo.data;
         } catch (error) {
             // console.log("Postservice :: createTodo :: Error :",error);
@@ -22,7 +22,7 @@ class PostService{
 
     async updateTodo({title,description},todoId){
         try {
-            const updatedTodo=await API.put(`${baseUrl}/updatetodo/${todoId}`,{title,description});
+            const updatedTodo=await API.put(`/updatetodo/${todoId}`,{title,description});
             return updatedTodo.data;
         } catch (error) {
             // console.log("Postservice :: updateTodo :: Error :",error);
@@ -32,7 +32,7 @@ class PostService{
 
     async deleteTodo(todoId){
        try {
-            const deletedTodo=await API.delete(`${baseUrl}/deletetodo/${todoId}`);
+            const deletedTodo=await API.delete(`/deletetodo/${todoId}`);
             return deletedTodo.data;
         } catch (error) {
             // console.log("Postservice :: deleteTodo :: Error :",error);
@@ -41,7 +41,7 @@ class PostService{
     }
     async getAllTodo(){
         try {
-            const response=await API.get(`${baseUrl}/getalltodo`);
+            const response=await API.get(`/getalltodo`);
             return response.data;
         } catch (error) {
             // console.log("Postservice :: getAllTodo :: Error :",error);
@@ -51,7 +51,7 @@ class PostService{
 
     async toggleCompleteTodo(todoId){
         try {
-            const response=await API.put(`${baseUrl}/toggletodo/${todoId}`);
+            const response=await API.put(`/toggletodo/${todoId}`);
             return response.data;
         } catch (error) {
             // console.log("Postservice :: toggleCompleteTodo :: Error :",error);
