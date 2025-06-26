@@ -1,7 +1,11 @@
 import axios from "axios";
 // const baseUrl='https://todo-backend-3t7g.onrender.com/api/v1/user'
-const baseUrl=`${import.meta.env.VITE_BACKEND_URL}/api/v1/user`;
-// const baseUrl=`/api/v1/user`;
+// const baseUrl=`${import.meta.env.VITE_BACKEND_URL}/api/v1/user`;
+// const baseUrl=`/api/v1/user`
+const API=axios.create({
+    baseURL:import.meta.env.VITE_BACKEND_URL +`/api/v1/user`,
+    withCredentials:true,
+})
 
 class Authservice{
     //! User Register
@@ -14,7 +18,7 @@ class Authservice{
         formData.append("password", password);
         formData.append("avatar", avatar);
         try {
-            const userRegister=await axios.post(`${baseUrl}/register`,formData)
+            const userRegister=await API.post(`${baseUrl}/register`,formData)
 
             if(userRegister){
                 return this.userLogin({email,password});
@@ -30,7 +34,7 @@ class Authservice{
     //! User LogIn
     async userLogin({email,password}){
         try {
-            const loggedinUser=await axios.post(`${baseUrl}/login`,{
+            const loggedinUser=await API.post(`${baseUrl}/login`,{
                 email,
                 password
             })
@@ -44,7 +48,7 @@ class Authservice{
     //! User LogOut
     async userLogOut(){
         try {
-            const logoutuser=await axios.delete(`${baseUrl}/logout`);
+            const logoutuser=await API.delete(`${baseUrl}/logout`);
             return logoutuser.data;
         } catch (error) {
             //  console.log("Authservice :: userLogOut :: Error :",error);
@@ -55,7 +59,7 @@ class Authservice{
     //! get current user
     async getcurrentUser(){
         try {
-            const getUser=await axios.get(`${baseUrl}/getcurrentuser`);
+            const getUser=await API.get(`${baseUrl}/getcurrentuser`);
             if(getUser){
                 return getUser.data;
             }else{
@@ -70,7 +74,7 @@ class Authservice{
     //! change Password
     async changePassword(data){
         try {
-            const response=await axios.put(`${baseUrl}/changepassword`,{
+            const response=await API.put(`${baseUrl}/changepassword`,{
                oldPassword:data?.oldPassword,
                newPassword:data?.newPassword
             }
@@ -91,7 +95,7 @@ class Authservice{
             if(avatar){
                 formData.append('avatar',avatar);
             }
-            const updatedUser=await axios.put(`${baseUrl}/updateuserdetailes`,formData)
+            const updatedUser=await API.put(`${baseUrl}/updateuserdetailes`,formData)
             return updatedUser.data;
         } catch (error) {
             // console.log("Authservice :: updateUserDetails :: Error :",error);
